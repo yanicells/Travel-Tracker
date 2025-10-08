@@ -94,7 +94,7 @@ Project will be available at: http://localhost:3000
 
 1. Register or create a user profile.
 2. Mark countries you have visited using ISO alpha-2 country codes (e.g., FR, GB).
-3. View your visited countries list or map (if implemented).
+3. View your visited countries in the world map.
 
 ## Notes
 1. Ensure your database credentials in .env match your PostgreSQL setup.
