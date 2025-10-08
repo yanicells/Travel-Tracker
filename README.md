@@ -1,6 +1,6 @@
 # Travel-Tracker
 
-Travel Tracker is a lightweight app that lets users create profiles and record the countries they've visited using ISO country codes.
+Travel Tracker is a web app that lets users create profiles and record the countries they've visited using ISO country codes.
 
 ## Tech Stack
 
