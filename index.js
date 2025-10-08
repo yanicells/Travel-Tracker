@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
@@ -5,14 +6,27 @@ import pg from "pg";
 const app = express();
 const port = 3000;
 
-const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "World",
-  password: "yanigwapo123",
-  port: 5432,
-});
-db.connect();
+async function connectWithRetry() {
+  const client = new pg.Client({
+    user: process.env.DBUSER,
+    host: process.env.DBHOST,
+    database: process.env.DBNAME,
+    password: process.env.DBPASS,
+    port: process.env.DBPORT,
+  });
+
+  try {
+    await client.connect();
+    console.log("✅ Connected to database!");
+    return client;
+  } catch (err) {
+    console.error("❌ Database not ready, retrying in 5s...", err.code);
+    await new Promise((res) => setTimeout(res, 5000));
+    return connectWithRetry();
+  }
+}
+
+const db = await connectWithRetry();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
